@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau Visualization</title>
+    <script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 15px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Tableau Dashboard</h1>
+        <p>Explore the visualization below. Use the buttons to interact with the dashboard.</p>
+        <div id="tableauViz"></div>
+        <button onclick="reloadViz()">Reload Visualization</button>
+        <button onclick="exportPDF()">Export as PDF</button>
+        <button onclick="exportImage()">Export as Image</button>
+    </div>
+
+    <script>
+        var viz;
+        function initViz() {
+            var containerDiv = document.getElementById("tableauViz");
+            var url = "https://public.tableau.com/views/StinkySausge/Dashboard1";
+            var options = {
+                hideTabs: true,
+                onFirstInteractive: function () {
+                    console.log("Tableau Dashboard is Interactive");
+                }
+            };
+            viz = new tableau.Viz(containerDiv, url, options);
+        }
+        function reloadViz() {
+            if (viz) {
+                viz.dispose();
+            }
+            initViz();
+        }
+        function exportPDF() {
+            if (viz) {
+                viz.showExportPDFDialog();
+            }
+        }
+        function exportImage() {
+            if (viz) {
+                viz.showExportImageDialog();
+            }
+        }
+        window.onload = initViz;
+    </script>
+</body>
+</html>
